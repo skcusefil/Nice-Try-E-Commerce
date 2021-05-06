@@ -30,6 +30,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("SqliteConnection")));
 
@@ -37,6 +38,15 @@ namespace API
             services.AddAplicationServices();
 
             services.AddControllers();
+
+            //allow to call from angular https://localhost:4200
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
 
             services.AddSwaggerDocumentation();
         }
@@ -46,9 +56,12 @@ namespace API
         {
             app.UseDeveloperExceptionPage();
             app.UserSwaggerDocumentation();
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //allow to call from angular https://localhost:4200
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
