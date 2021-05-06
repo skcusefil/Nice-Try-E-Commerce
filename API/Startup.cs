@@ -42,9 +42,9 @@ namespace API
             //allow to call from angular https://localhost:4200
             services.AddCors(opt =>
             {
-                opt.AddPolicy("CorPolicy", policy =>
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    policy.AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithOrigins("https://localhost:4200");
                 });
             });
 
