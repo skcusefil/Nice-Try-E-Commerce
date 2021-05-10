@@ -18,16 +18,19 @@ namespace API.Controllers
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
         private readonly IGenericRepository<ProductType> _productTypeRepo;
+        private readonly IProductRepository _product;
         private readonly IMapper _mapper;
 
         public ProductsController(IGenericRepository<Product> productRepo,
         IGenericRepository<ProductBrand> productBrandRepo,
         IGenericRepository<ProductType> productTypeRepo,
+        IProductRepository product,
         IMapper mapper)
         {
             _productRepo = productRepo;
             _productBrandRepo = productBrandRepo;
             _productTypeRepo = productTypeRepo;
+            _product = product;
             _mapper = mapper;
         }
         [HttpGet]
@@ -37,15 +40,21 @@ namespace API.Controllers
             var spec = new ProductsWithTypesAndBrands(productParams);
 
             var countSpec = new ProductWithFiltersForCountSpecification(productParams);
-            var totalItems = await _productRepo.CountAsync(spec);
+
+            var itemParamCount = await _productRepo.CountAsync(spec);
+
+            //get total products
+            var getTotalProducts = await _product.GetProductsAsync();
+            var totalItems = getTotalProducts.Count();
+
 
             var products = await _productRepo.ListAsync(spec);
 
             //var productDtos = products.Select(product => _mapper.Map<Product, ProductDto>(product));
             //var productDtos = _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDto>>(products);
-            var productPerPage = _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDto>>(products);
+            var productPerPage = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products);
 
-            var pagination = new Pagination<ProductDto>(productParams.PageIndex, productParams.PageSize, totalItems, productPerPage);
+            var pagination = new Pagination<ProductDto>(productParams.PageIndex, productParams.PageSize, totalItems, itemParamCount, productPerPage);
 
             return Ok(pagination);
         }
