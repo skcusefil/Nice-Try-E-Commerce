@@ -40,15 +40,7 @@ export class ShopComponent implements OnInit {
       this.products = response.data;
       this.shoptParams.pageNumber = response.pageIndex;
       this.shoptParams.pageSize = response.pageSize;
-
-      if(this.shoptParams.brandId === 0 && this.shoptParams.typeId === 0){
-        this.totalCount = response.totalItems; //count all items in database
-      }else{
-        this.totalCount = response.itemParamCount;
-      }
-
-
-      this.totalPages = response.totalPages;
+      this.totalCount = response.count;
     }, error => {
       console.log(error);
     })

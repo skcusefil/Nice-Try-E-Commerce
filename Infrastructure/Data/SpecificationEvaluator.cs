@@ -7,33 +7,31 @@ namespace Infrastructure.Data
 {
     public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
     {
-        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
+        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec)
         {
             var query = inputQuery;
 
-            if(specification.Criteria != null)
+            if (spec.Criteria != null)
             {
-                // for using this
-                // Here specification.Criteria can be lamda expression for example p => p.ProductTypeId == id
-                query = query.Where(specification.Criteria); 
+                query = query.Where(spec.Criteria);
             }
 
-            if(specification.OrderBy != null)
+            if (spec.OrderBy != null)
             {
-                query = query.OrderBy(specification.OrderBy);
+                query = query.OrderBy(spec.OrderBy);
             }
 
-            if(specification.OrderByDecending != null)
+            if (spec.OrderByDescending != null)
             {
-                query = query.OrderByDescending(specification.OrderByDecending);
+                query = query.OrderByDescending(spec.OrderByDescending);
             }
 
-            if(specification.IsPagingEnabled)
+            if (spec.IsPagingEnabled)
             {
-                query = query.Skip(specification.Skip).Take(specification.Take);
+                query = query.Skip(spec.Skip).Take(spec.Take);
             }
 
-            query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
         }
