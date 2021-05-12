@@ -10,7 +10,7 @@
         <ul class="list-group">
             <h5 class="text-warning mt-3 ml-3 mb-3">Brands</h5>
             <li class="list-group-item" *ngFor="let brand of brands"
-                [class.active]="brand.id === this.shoptParams.brandId" [value]="brand.id"
+                [class.active]="brand.id === this.shopParams.brandId" [value]="brand.id"
                 (click)="onBrandSelected(brand.id)">
                 {{brand.name}}
             </li>
@@ -18,7 +18,7 @@
 
         <ul class="list-group">
             <h5 class="text-warning  mt-3 ml-3 mb-3">Types</h5>
-            <li class="list-group-item" *ngFor="let type of types" [class.active]="type.id === this.shoptParams.typeId"
+            <li class="list-group-item" *ngFor="let type of types" [class.active]="type.id === this.shopParams.typeId"
                 [value]="type.id" (click)="onTypeSelected(type.id)">
                 {{type.name}}
             </li>
@@ -27,14 +27,13 @@
     </section>
     <section class="col-9">
         <div class="d-flex justify-content-between align-item-center pb-2">
-            <app-paging-header [pageSize]="this.shoptParams.pageSize" 
-            [pageNumber]="this.shoptParams.pageNumber"
-            [totalCount]="this.totalCount">
-        </app-paging-header>
+            <app-paging-header [pageSize]="this.shopParams.pageSize" [pageNumber]="this.shopParams.pageNumber"
+                [totalCount]="this.totalCount">
+            </app-paging-header>
             <div class="form-inline mt-2">
-                <input class="form-controll mr-2" style="width: 300px;" placeholder="Search" type="text">
-                <button class="btn btn-outline-primary ml-2 my-2">Search</button>
-                <button class="btn btn-outline-success ml-2 my-2">Reset</button>
+                <input #search (keyup.enter)="onSearch()" class="form-controll mr-2" style="width: 300px;" placeholder="Search" type="text" > 
+                <button class="btn btn-outline-primary ml-2 my-2" (click)="onSearch()" >Search</button>
+                <button class="btn btn-outline-success ml-2 my-2" (click)="onReset()" >Reset</button>
             </div>
         </div>
 
@@ -44,10 +43,10 @@
             </div>
         </div>
         <div class="d-flex justify-content-center mt-">
-            <pagination [boundaryLinks]="true" [totalItems]="this.totalCount" (pageChanged)="onPageChanged($event)"
-                [itemsPerPage] = "this.shoptParams.pageSize"
-                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-            </pagination>
+            <app-page-nav   [pageSize]="shopParams.pageSize" 
+                            [totalCount]="totalCount"
+                            (pageChanged)="onPageChanged($event)">
+            </app-page-nav>
         </div>
     </section>
 </div>
