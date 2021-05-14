@@ -2,15 +2,13 @@
     <header class="p-3 bg-dark text-white">
         <div
             class="d-flex flex-column flex-md-row flex-md-row align-items-center justify-content-between p-3 px-md-4 mb-1">
-            <img class="d-flex justify-content-start" src="/assets/images/shopping.png" style="max-height: 70px"
+            <img class="logo" src="/assets/images/shopping.png" style="max-height: 70px" routerLink="/"
                 alt="logo">
    
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                <li><a [routerLink]="['/']" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+                <li><a routerLink="/shop" routerLinkActive="active" class="nav-link">Shop</a></li>
+                <li><a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a></li>
             </ul>
             <div class="d-flex align-items-center">
                 <a class="position-relative">
