@@ -1,24 +1,28 @@
-<!-- <div class="container"> -->
-    <header class="p-3 bg-dark text-white">
+<div class="container bg-dark">
         <div
-            class="d-flex flex-column flex-md-row flex-md-row align-items-center justify-content-between p-3 px-md-4 mb-1">
-            <img class="logo" src="/assets/images/shopping.png" style="max-height: 70px" routerLink="/"
+            class="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 px-md-4 mb-1">
+            
+            <div class="d-flex align-items-center">
+                <img class="logo" src="/assets/images/shopping.png" style="max-height: 70px" routerLink="/"
                 alt="logo">
-   
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a [routerLink]="['/']" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
-                <li><a routerLink="/shop" routerLinkActive="active" class="nav-link">Shop</a></li>
-                <li><a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a></li>
-            </ul>
+            </div>
+      
+            <div class="d-flex align-items-center">
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a [routerLink]="['/']" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+                    <li><a routerLink="/shop" routerLinkActive="active" class="nav-link">Shop</a></li>
+                    <li><a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+           
             <div class="d-flex align-items-center">
                 <a class="position-relative">
-                    <i class="fa fa-shopping-cart fa-2x mr-5 text-light"></i>
+                    <i class="fa fa-shopping-cart fa-2x mr-5 text-primary"></i>
                     <div class="cart-no">5</div>
                 </a>
                 <a class="btn btn-outline-light mr-2 ">Login</a>
-                <a class="btn btn-warning ml-auto mr-3">Sign-up</a>
+                <a class="btn btn-outline-warning ml-auto mr-3">Sign-up</a>
             </div>
         </div>
-    </header>
-<!-- </div> -->
+    </div>
 
