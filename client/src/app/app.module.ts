@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,11 +10,18 @@ import { CoreModule } from './core/core.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { HomeModule } from './home/home.module';
+import { BasketComponent } from './basket/basket.component';
+import { SharedModule } from './shared/shared.module';
+import { registerLocaleData  } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 @NgModule({
   declarations: [
     AppComponent,
-  ],
+    BasketComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,10 +30,12 @@ import { HomeModule } from './home/home.module';
     HttpClientModule,
     CoreModule,
     NgxSpinnerModule,
-    HomeModule
+    HomeModule,
+    SharedModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: 'de-DE' }
   ],
   bootstrap: [AppComponent]
 })
