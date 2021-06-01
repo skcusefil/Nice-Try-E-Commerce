@@ -4,18 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Extensions;
 using API.Helpers;
-using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 
 namespace API
@@ -35,8 +30,14 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("SqliteConnection")));
 
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlite(_configuration.GetConnectionString("IdentityConnection"));
+            });
+
             //Add extension services
             services.AddAplicationServices();
+            services.AddIdentityServices(_configuration);
 
             services.AddControllers();
 
@@ -73,6 +74,7 @@ namespace API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
