@@ -34,7 +34,7 @@ namespace API.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return Unauthorized();
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
