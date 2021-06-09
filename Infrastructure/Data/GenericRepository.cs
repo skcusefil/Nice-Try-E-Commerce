@@ -14,6 +14,7 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
+        
 
         public async Task<T> GetByIdAsync(int id)
         {
