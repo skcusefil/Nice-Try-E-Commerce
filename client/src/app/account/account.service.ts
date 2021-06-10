@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Address } from '../shared/models/address';
 import { User } from '../shared/models/user';
+import { ThisReceiver } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,6 @@ export class AccountService {
   updateUserAddress(address: Address) {
     return this.http.put<Address>(this.baseUrl + 'account/address', address);
   }
+
 }
 

@@ -1,0 +1,18 @@
+button.nav-link{
+    background: pink;
+    border-radius: 0;
+    border: none;
+
+    &:focus{
+        outline:none;
+    }
+    &.active:hover{
+        color: pink;
+    }
+    &:active{
+        outline: none;
+    }
+    &.active:focus{
+        outline: none;
+    }
+}
