@@ -1,6 +1,5 @@
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { registerEscClick } from 'ngx-bootstrap/utils';
 import { Observable } from 'rxjs';
 import { delay, finalize } from 'rxjs/operators';
 import { BusyService } from '../services/busy.service';
