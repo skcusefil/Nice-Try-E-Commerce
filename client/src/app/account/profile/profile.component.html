@@ -1,0 +1,35 @@
+  
+<div class="d-flex justify-content-center mt-5">
+    <div>
+        <div class="row">
+            <div class="col">
+                <h5 class="block  "><strong>Shipping Address</strong></h5>
+            </div>
+            <div class="col">
+                <p>
+                    {{userAddress?.firstName}} {{userAddress?.lastName}}
+                    <br>
+                    {{userAddress?.street}} {{userAddress?.city}}
+                    <br>
+                    {{userAddress?.state}} {{userAddress?.zipCode}}
+                </p>
+                <button class="btn btn-outline-primary" routerLink="/account/edit-address">Edit Address</button>    
+            </div>
+            <hr style="width: 100%; color: black; height: 1px; background-color:black; margin-top: 1.5em;" />
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5 class="block  "><strong>Login</strong></h5>
+            </div>
+            <div class="col">
+                <p>
+                    {{(currentUser$ | async).email}}
+                </p>
+                <button class="btn btn-outline-primary" routerLink="/account/change-password">Change Password</button>    
+            </div>
+            <hr style="width: 100%; color: black; height: 1px; background-color:black; margin-top: 1.5em;" />
+        </div>
+    </div>
+    
+    
+</div>

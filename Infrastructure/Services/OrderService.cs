@@ -12,8 +12,10 @@ namespace Infrastructure.Services
     {
         private readonly IBasketRepository _basketRepo;
         private readonly IUnitOfWork _unitOfWork;
-        public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo)
+        private readonly IPaymentService _paymentService;
+        public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo, IPaymentService paymentService)
         {
+            _paymentService = paymentService;
             _unitOfWork = unitOfWork;
             _basketRepo = basketRepo;
         }
@@ -39,17 +41,28 @@ namespace Infrastructure.Services
             //calc subtotal
             var subtotal = items.Sum(item => item.Price * item.Quantity);
 
+            //check if order exists 
+            var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+            var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+            if (existingOrder != null)
+            {
+                _unitOfWork.Repository<Order>().Delete(existingOrder);
+                await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
+            }
+
+
             //create order
-            var order = new Order(buyerEmail, shippingAdress, deliveryMethod, items, subtotal);
+            var order = new Order(buyerEmail, shippingAdress, deliveryMethod, items, subtotal, basket.PaymentIntentId);
             _unitOfWork.Repository<Order>().Add(order);
 
             //save to database
             var result = await _unitOfWork.Complete();
 
-            if(result <= 0) return null;
+            if (result <= 0) return null;
 
             //delete basket if success save to database
-            await _basketRepo.DeleteBasketAsync(basketId);
+            //await _basketRepo.DeleteBasketAsync(basketId);
 
             //return order
             return order;
@@ -57,7 +70,7 @@ namespace Infrastructure.Services
 
         public async Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethosAsync()
         {
-           return await _unitOfWork.Repository<DeliveryMethod>().ListAllAsync();
+            return await _unitOfWork.Repository<DeliveryMethod>().ListAllAsync();
         }
 
         public async Task<Order> GetOrderByIdAsync(int id, string buyerEmail)

@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "../node_modules/bootswatch/dist/simplex/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/ngx-toastr/toastr.css";
 
 .xng-breadcrumb-root{
     padding: 8px 16px;
@@ -11,9 +15,13 @@
 
 label.xng-breadcrumb-trail{
     margin-bottom: 0;
-    color: orange;
+    color:#d9230f;
 }
 
 .xng-breadcrumb-seperator{
     padding: 0 0;
+}
+
+.StripeElement{
+    height: 3.125em;
 }
