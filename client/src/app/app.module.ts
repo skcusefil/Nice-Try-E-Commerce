@@ -16,6 +16,7 @@ import { registerLocaleData  } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { jwtInterCeptor } from './core/interceptors/jwt.interceptor';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
@@ -33,7 +34,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     CoreModule,
     NgxSpinnerModule,
     HomeModule,
-    SharedModule
+    MatStepperModule,
+    SharedModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},

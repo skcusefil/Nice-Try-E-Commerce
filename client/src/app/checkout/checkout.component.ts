@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AccountService } from '../account/account.service';
 import { BasketService } from '../basket/basket.service';
 import { IBasketTotals } from '../shared/models/basket';
+
 
 @Component({
   selector: 'app-checkout',
@@ -22,6 +23,7 @@ export class CheckoutComponent implements OnInit {
     this.getAddressFormValues();
     this.getDeliveryMethodValue();
     this.basketTotals$ = this.basketService.basketTotal$;
+
   }
 
   createCheckoutForm() {
@@ -63,4 +65,8 @@ export class CheckoutComponent implements OnInit {
       this.checkoutForm.get('deliveryForm').get('deliveryMethod').patchValue(basket.deliveryMethodId.toString());
     }
   }
+
+  
+  
+
 }

@@ -15,16 +15,21 @@ export class CheckoutService {
 
   constructor(private http: HttpClient) { }
 
-  getDeliveryMethods(){
-    return this.http.get(this.baseUrl+'orders/deliverymethods').pipe(
-      map((dm:DeliveryMethod[])=>{
+  getDeliveryMethods() {
+    return this.http.get(this.baseUrl + 'orders/deliverymethods').pipe(
+      map((dm: DeliveryMethod[]) => {
         //sort price from low to high
-        return dm.sort((a,b)=> b.price - a.price);
+        return dm.sort((a, b) => b.price - a.price);
       })
     )
   }
 
-  createOrder(order: OrderToCreate){
-    return this.http.post(this.baseUrl+'orders', order);
+  createOrder(order: OrderToCreate) {
+    return this.http.post(this.baseUrl + 'orders', order);
+  }
+
+  paymentService(basketId: string, orderId: string) {
+        const param = 'payments/'+basketId + '?paypalOrderId='+orderId
+        return this.http.post(this.baseUrl + param, {});
   }
 }

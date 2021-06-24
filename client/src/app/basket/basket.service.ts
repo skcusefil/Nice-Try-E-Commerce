@@ -21,8 +21,8 @@ export class BasketService {
 
   constructor(private http: HttpClient) { }
 
-  createPaymentIntent(){
-    return this.http.post(this.baseUrl+'payments/'+this.getCurrentBasketValue().id,{}).pipe(
+  createPaymentIntent(orderId: string){
+    return this.http.post(this.baseUrl+'payments/'+this.getCurrentBasketValue().id+'?paypalOrderId='+orderId,{}).pipe(
       map((basket:IBasket)=>{
         this.basketSource.next(basket);
       })
@@ -62,7 +62,8 @@ export class BasketService {
     return this.http.post(this.baseUrl + 'basket', basket).subscribe((response:IBasket) => {
       this.basketSource.next(response);
       this.calculateTotals();
-      console.log(response);
+      //just show current basket value 
+      //console.log(response);
     });
   }
 
@@ -90,6 +91,7 @@ export class BasketService {
 
     return items;
   }
+  
   createBasket(): IBasket {
     const basket = new Basket();
     //using client local storage for save basket data, as long as user doesnt remove history data will be stored in local browser

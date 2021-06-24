@@ -11,19 +11,19 @@ using Product = Core.Entities.Product;
 
 namespace Infrastructure.Services
 {
-    public class PaymentService : IPaymentService
+    public class PaymentService_Stripe : IPaymentService_Stripe
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
-        public PaymentService(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
+        public PaymentService_Stripe(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;
             _basketRepository = basketRepository;
         }
 
-        public async Task<CustomerBasket> CreateOrUpdatePaymentIntent(string basketId)
+        public async Task<CustomerBasket> CreateOrUpdatePaymentIntent_Stripe(string basketId)
         {
             //here getting information from appsetting.json, spelling is important!
             StripeConfiguration.ApiKey = _configuration["StripeSetting:SecretKey"];
@@ -77,7 +77,8 @@ namespace Infrastructure.Services
             return basket;
         }
 
-        public async Task<Core.OrderAggregate.Order> UpdateOrderPaymentFailed(string paymentIntentId)
+
+        public async Task<Core.OrderAggregate.Order> UpdateOrderPaymentFailed_Stripe(string paymentIntentId)
         {
             var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
             var order = await _unitOfWork.Repository<Core.OrderAggregate.Order>().GetEntityWithSpec(spec);
@@ -89,7 +90,7 @@ namespace Infrastructure.Services
             return order;
         }
 
-        public async Task<Core.OrderAggregate.Order> UpdateOrderPaymentSucceeded(string paymentIntentId)
+        public async Task<Core.OrderAggregate.Order> UpdateOrderPaymentSucceeded_Stripe(string paymentIntentId)
         {
             var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
             var order = await _unitOfWork.Repository<Core.OrderAggregate.Order>().GetEntityWithSpec(spec);

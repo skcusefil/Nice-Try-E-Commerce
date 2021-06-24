@@ -11,7 +11,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 const routes: Routes = [
   {path: 'login', component:LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: ProfileComponent, data: {breadcrumb:{alias: 'profile'}}},
   {path: 'edit-address', component: EditAddressComponent},
   {path: 'change-password', component: ChangePasswordComponent}
 

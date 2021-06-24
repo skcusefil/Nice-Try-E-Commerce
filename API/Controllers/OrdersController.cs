@@ -24,17 +24,18 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
+        public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
             var email = HttpContext.User.RetrieveEmailFromPrincipla();
 
             //must be careful with Address that get from Core.OrderAggregate
             var address = _mapper.Map<AddressDto, Address>(orderDto.ShipToAddress);
 
-            var order = await _orderService.CreateOrderAsync(email, orderDto.deliveryMethodId, orderDto.BasketId, address);
+            var order = await _orderService.CreateOrderAsync(email, orderDto.deliveryMethodId, orderDto.BasketId, address, orderDto.PaypalOrderId);
+            var orderToReturn = _mapper.Map<Order, OrderToReturnDto>(order);
             if(order == null) return BadRequest("Problem creating order");
 
-            return Ok(order);
+            return Ok(orderToReturn);
         }
 
         [HttpGet]

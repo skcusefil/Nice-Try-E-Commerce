@@ -17,6 +17,8 @@ export class CheckoutAddressComponent implements OnInit {
   constructor(private accountService: AccountService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    console.log('Address value in checkout-address',this.checkoutForm.get('addressForm').value);
+
   }
 
   saveUserAddress(){

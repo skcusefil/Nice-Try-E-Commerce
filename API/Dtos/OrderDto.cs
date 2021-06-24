@@ -5,5 +5,6 @@ namespace API.Dtos
         public string BasketId { get; set; }
         public int deliveryMethodId { get; set; }
         public AddressDto ShipToAddress { get; set; }
+        public string PaypalOrderId { get; set; }
     }
 }

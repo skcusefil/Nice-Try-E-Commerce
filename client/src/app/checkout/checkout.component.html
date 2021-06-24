@@ -2,28 +2,50 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col-8">
+                <mat-horizontal-stepper [linear]="true" #stepper>
+                    <mat-step label="Address" [completed]="(checkoutForm.get('addressForm')).valid">
+                      <app-checkout-address [checkoutForm]="checkoutForm"></app-checkout-address>
+                    </mat-step>
+                    <mat-step label="Delivery" [completed]="(checkoutForm.get('deliveryForm')).valid">
+                        <app-checkout-delivery [checkoutForm]="checkoutForm"></app-checkout-delivery>
+                    </mat-step >
+                    <mat-step label="Review" >
+                        <app-checkout-review [appStepper]="stepper"></app-checkout-review>
+                    </mat-step>
+                    <mat-step label="Payment">
+                        <app-checkout-paypal [checkoutForm]="checkoutForm"></app-checkout-paypal>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+            <div class="col-4">
+                <app-order-totals *ngIf="(basketTotals$ | async)" [testInput]="basketTotals$"
+                [shippingPrice]="(basketTotals$ | async).shipping" [subtotal]="(basketTotals$ | async).subtotal"
+                [total]="(basketTotals$ | async).total"></app-order-totals>
+            </div>
+            <!-- <div class="col-8">
                 <app-stepper [linearModeSelected]="true" #appStepper>
-                    <cdk-step [label]="'Address'" [completed]="(checkoutForm.get('addressForm')).valid" >
+                    <cdk-step [label]="'Address'" [completed]="(checkoutForm.get('addressForm')).valid">
                         <app-checkout-address [checkoutForm]="checkoutForm"></app-checkout-address>
                     </cdk-step>
-                    <cdk-step [label]="'Delivery'"  [completed]="(checkoutForm.get('deliveryForm')).valid">
-                        <app-checkout-delivery [checkoutForm]="checkoutForm" ></app-checkout-delivery>
+                    <cdk-step [label]="'Delivery'" [completed]="(checkoutForm.get('deliveryForm')).valid">
+                        <app-checkout-delivery [checkoutForm]="checkoutForm"></app-checkout-delivery>
                     </cdk-step>
-                    <cdk-step [label]="'Review'" >
+                    <cdk-step [label]="'Review'">
                         <app-checkout-review [appStepper]="appStepper"></app-checkout-review>
                     </cdk-step>
-                    <cdk-step [label]="'Peyment'" >
+                    <cdk-step [label]="'Peyment'">
                         <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment>
                     </cdk-step>
                 </app-stepper>
             </div>
             <div class="col-4">
-                <app-order-totals *ngIf="(basketTotals$ | async)"
-                [testInput]="basketTotals$"
-                [shippingPrice]="(basketTotals$ | async).shipping"
-                [subtotal]="(basketTotals$ | async).subtotal" 
-                [total]="(basketTotals$ | async).total"></app-order-totals>            
-            </div>
+                <app-order-totals *ngIf="(basketTotals$ | async)" [testInput]="basketTotals$"
+                    [shippingPrice]="(basketTotals$ | async).shipping" [subtotal]="(basketTotals$ | async).subtotal"
+                    [total]="(basketTotals$ | async).total"></app-order-totals>
+                <ng-container>
+                    <app-checkout-paypal></app-checkout-paypal>
+                </ng-container>>
+            </div> -->
         </div>
     </div>
 </div>

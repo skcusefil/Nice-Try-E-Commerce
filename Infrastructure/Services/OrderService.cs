@@ -12,15 +12,19 @@ namespace Infrastructure.Services
     {
         private readonly IBasketRepository _basketRepo;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPaymentService _paymentService;
-        public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo, IPaymentService paymentService)
+        private readonly IPaymentService_Stripe _paymentService;
+        private readonly IPaymentService_Paypal _paymentService_Paypal;
+        private readonly IPaymentService_Stripe _paymentService_Stripe;
+        public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo, IPaymentService_Stripe paymentService_Stripe,
+        IPaymentService_Paypal paymentService_Paypal)
         {
-            _paymentService = paymentService;
+            _paymentService_Stripe = paymentService_Stripe;
+            _paymentService_Paypal = paymentService_Paypal;
             _unitOfWork = unitOfWork;
             _basketRepo = basketRepo;
         }
 
-        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, Address shippingAdress)
+        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, Address shippingAdress, string paypalOrderId)
         {
             //get basket from the repo
             var basket = await _basketRepo.GetBasketAsync(basketId);
@@ -42,18 +46,27 @@ namespace Infrastructure.Services
             var subtotal = items.Sum(item => item.Price * item.Quantity);
 
             //check if order exists 
-            var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+            var spec = new OrderByPaymentIntentIdSpecification(basketId);
             var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
             if (existingOrder != null)
             {
                 _unitOfWork.Repository<Order>().Delete(existingOrder);
-                await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
+
+                //create payment with stripe
+                //await _paymentService.CreateOrUpdatePaymentIntent_Stripe(basket.PaymentIntentId);
+
+                //create payment with paypal
+                await _paymentService_Paypal.CreateOrUpdatePaymentIntent_Paypal(basketId, paypalOrderId);
+
             }
 
 
-            //create order
-            var order = new Order(buyerEmail, shippingAdress, deliveryMethod, items, subtotal, basket.PaymentIntentId);
+            //create order stripe
+            //var order = new Order(buyerEmail, shippingAdress, deliveryMethod, items, subtotal, basket.PaymentIntentId);
+
+            //create order for paypalpayment
+            var order = new Order(buyerEmail, shippingAdress, deliveryMethod, items, subtotal, paypalOrderId);
             _unitOfWork.Repository<Order>().Add(order);
 
             //save to database

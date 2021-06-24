@@ -1,13 +1,20 @@
 <div class="mt-4">
     <app-basket-summary [isBasket]=false [items]="(basket$ | async).items"></app-basket-summary>
-
 </div>
 
 <div class="float-none d-flex justify-content-between flex-column flex-lg-row mb-5">
-    <button class="btn btn-outline-primary" cdkStepperPrevious >
+    <button class="btn btn-outline-primary" matStepperPrevious >
         <i class="fa fa-angle-left"> Back to delivery</i>
     </button>
-    <button class="btn btn-primary" cdkStepperNext (click)="createPaymentIntent()" >
+
+    <!-- pay with paypal -->
+    <button class="btn btn-primary" matStepperNext >
         Go to Payment <i class="fa fa-angle-right"></i>
     </button>
+
+
+    <!-- create intent for stripe -->
+    <!-- <button class="btn btn-primary" cdkStepperNext (click)="createPaymentIntent()" >
+        Go to Payment <i class="fa fa-angle-right"></i>
+    </button> -->
 </div>

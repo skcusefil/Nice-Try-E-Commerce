@@ -1,5 +1,5 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -21,21 +21,32 @@ export class CheckoutReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.basket$ = this.basketService.basket$;
+
+    
   }
 
-  createPaymentIntent(){
-    return this.basketService.createPaymentIntent().subscribe((response:any)=>{
-      console.log(response);
-      this.toastr.success('Payment intent created');
-      this.appStepper.next();
-    }, error=>{
-      console.log(error);
-      //this.toastr.error(error.message);
-    })
-  }
+  //create payment for stripe
+  // createPaymentIntent(){
+  //   return this.basketService.createPaymentIntent().subscribe((response:any)=>{
+  //     this.toastr.success('Payment intent created');
+  //     this.appStepper.next();
+  //   }, error=>{
+  //     console.log(error);
+  //     //this.toastr.error(error.message);
+  //   })
+  // }
 
   setShippingPrice(deliveryMethod: DeliveryMethod) {
     this.basketService.setShippingPrice(deliveryMethod);
+  }
+
+  //paypal
+  @ViewChild('paypal', {static: true}) paypalElement: ElementRef;
+  
+
+  product = {
+    price: 80,
+    description: 'some discription'
   }
 
 }

@@ -25,3 +25,8 @@ label.xng-breadcrumb-trail{
 .StripeElement{
     height: 3.125em;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+//mat-stepper style
+$redTheme: #dc3545;

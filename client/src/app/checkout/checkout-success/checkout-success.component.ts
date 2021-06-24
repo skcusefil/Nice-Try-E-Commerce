@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BasketService } from 'src/app/basket/basket.service';
 import { Order } from 'src/app/shared/models/order';
 import { ImportDeclaration } from 'typescript';
 
@@ -12,7 +13,7 @@ export class CheckoutSuccessComponent implements OnInit {
 
   order: Order;
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private basketService: BasketService) { 
     const navigation = this.router.getCurrentNavigation();
     const state = navigation && navigation.extras && navigation.extras.state;
     if(state){
@@ -25,6 +26,10 @@ export class CheckoutSuccessComponent implements OnInit {
 
   viewOrders(){
     this.router.navigateByUrl('order');
+  }
+
+  deleteBasket(){
+    this.basketService.deleteBasket(this.basketService.getCurrentBasketValue());
   }
 
 }

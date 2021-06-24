@@ -19,7 +19,7 @@ export class CheckoutDeliveryComponent implements OnInit {
 
   ngOnInit(): void {
     this.basketService.getCurrentBasketValue();
-    console.log(this.basketService.getCurrentBasketValue());
+    //console.log(this.basketService.getCurrentBasketValue());
     this.checkoutService.getDeliveryMethods().subscribe((dm:DeliveryMethod[])=>{
       if(dm){
         this.deliveryMethods = dm;
@@ -27,6 +27,7 @@ export class CheckoutDeliveryComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+
   }
 
   setShippingPrice(deliveryMethod: DeliveryMethod){

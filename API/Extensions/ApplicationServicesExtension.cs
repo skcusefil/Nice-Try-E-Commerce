@@ -16,7 +16,9 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentService_Stripe, PaymentService_Stripe>();
+            services.AddScoped<IPaymentService_Paypal, PaymentService_Paypal>();
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             
             return services;
         }
