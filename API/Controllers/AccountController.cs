@@ -43,7 +43,7 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
-            var token = _tokenService.CreateToken(user);
+            var token = await _tokenService.CreateTokenAsync(user);
 
             return new UserDto { Email = user.Email, DisplayName = user.DisplayName, Token = token };
         }
@@ -70,7 +70,7 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            var token = _tokenService.CreateToken(user);
+            var token = await _tokenService.CreateTokenAsync(user);
 
             return new UserDto { Email = user.Email, DisplayName = user.DisplayName, Token = token };
         }
@@ -89,7 +89,7 @@ namespace API.Controllers
 
             //search user from e-mail normal method
             //var user = await _userManager.FindByEmailAsync(email);
-            var token = _tokenService.CreateToken(user);
+            var token = await _tokenService.CreateTokenAsync(user);
 
             return new UserDto { Email = user.Email, DisplayName = user.DisplayName, Token = token };
 
