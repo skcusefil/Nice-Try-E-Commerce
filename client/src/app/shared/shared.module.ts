@@ -15,7 +15,6 @@ import { RouterModule } from '@angular/router';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatStepperComponent } from './components/mat-stepper/mat-stepper.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -26,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TextInputComponent,
     StepperComponent,
     BasketSummaryComponent,
-    MatStepperComponent
+    MatStepperComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     NgxPayPalModule,
     MatStepperModule, 
+    FormsModule
     
   ],
   exports: [
@@ -57,6 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxPayPalModule,
     MatStepperComponent,
     MatStepperModule, 
+    FormsModule
     
   ]
 })

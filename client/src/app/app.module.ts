@@ -20,6 +20,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+
 @NgModule({
   declarations: [
     AppComponent,

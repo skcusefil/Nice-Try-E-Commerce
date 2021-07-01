@@ -9,6 +9,7 @@ export class PageNavComponent implements OnInit {
 
   @Input() totalCount: number;
   @Input() pageSize: number;
+  @Input() pageNumber: number;
 
   //EventEmitter need to get something from angular core
   @Output() pageChanged = new EventEmitter<number>();
